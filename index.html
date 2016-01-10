@@ -1,0 +1,676 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Nisiros 3D geology</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+    <link href="Styles/main.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id='map' class='map'> </div>
+    <nav id='menu-ui' class='menu-ui'></nav>
+
+    <div  class="container " style="margin-top:10px; ">
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <button type="button"  class="btn btn-primary btn-block" data-toggle="collapse" data-target="#accordion">Show legend</button>
+                <div class="panel-group fixed-panel collapse" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#churches">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Churches
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="churches" class="panel-collapse collapse in">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/churches/church.png) center;'></span>Church
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#roads">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Roads
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="roads" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:black;stroke-width:6; " />
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:white;stroke-width:2; " />
+                                                </svg>
+                                            </div>
+                                            Road
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#monopatia">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Paths
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="monopatia" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:black;stroke-width:6; " />
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:red;stroke-width:2; " />
+                                                </svg>
+                                            </div>
+                                            Path
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Rivers">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Rivers
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="Rivers" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:#c3e6ff;stroke-width:2; " />
+                                                </svg>
+                                            </div>
+                                            River
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Oikismoi">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Settlements
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="Oikismoi" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/oikismoi/nistri.png) center;'></span>
+                                            Settlements
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#vents">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Vents
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="vents" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/BEB5C084.png) center;'></span>Volcanic vent
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/38AB1746.png)center;'></span>Submarine volcanic vent
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/7FFA8873.png)center;'></span>Volcanic Neck
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/F145C4B1.png)center; '></span>Hydrothermal explosion vent
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/CE1A64FF.png)center; '></span>Fumaroles
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/9E56E251.png)center; '></span>Steam vent
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/vents/D834FA7C.png)center; '></span>Hot spring
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#GeologicalLines">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Geological lines
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="GeologicalLines" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="diagFN legend" ></div>
+
+                                            Normal fault
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="diagLFF legend" ></div>
+
+                                            Front Lava Flow
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="diagGB legend" ></div>
+
+                                            Geological Boundary
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:rgb(169, 0, 230);stroke-width:1; stroke-dasharray:5,5;" />
+                                                </svg>
+                                            </div>
+                                            Volcanic crater
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:rgb(0, 92, 230);stroke-width:1; " />
+                                                </svg>
+                                            </div>
+                                            Coastline
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:black;stroke-width:1; " />
+                                                    <polyline points="6,5  20,5  22,18"
+                                                              style="stroke:black;" />
+                                                </svg>
+                                            </div>
+                                            Morphological caldera rim
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/geol_lines/dyke.png) center; '></span>Dyke
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:rgb(250, 52, 17);stroke-width:2; " />
+                                                </svg>
+                                            </div>
+                                            Hystorically active fault
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:rgb(169, 0, 230);stroke-width:2; stroke-dasharray:5,5;" />
+                                                </svg>
+                                            </div>
+                                            Dome boundary
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:rgb(0, 0, 0);stroke-width:1; stroke-dasharray:5,5;" />
+                                                </svg>
+                                            </div>
+                                            Probable fault
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/geol_lines/blue-arrow-26.png) center; '></span>Lava flow
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url("images/geol_lines/Hydrothermal crater.png") center; '></span>Hydrothermal crater
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Formations">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Formations
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="Formations" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(179, 255, 128); '></span>
+                                            Nikia Rhyolite domes and lava flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(230, 128, 255); '></span>
+                                            Middle volcaniclastics
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/A47B61FE.png) center; '></span>
+                                            Argos rhyolitic lava domes and flows (65 Ka)
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(255, 230, 255); '></span>
+                                            Yali obsidian-perlitic lava domes and flows (24 Ka)
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/BCD18107.png) center; '></span>
+                                            Scree and tectonic breccias
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/AB53349.png) center; '></span>
+                                            Reworked Nisyros Lower Pumice
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(128, 179, 0); '></span>
+                                            Emborio dacitic lava domes and flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(255, 255, 128); '></span>
+                                            Hydrothermal explosion deposits - Lacustrine intacaldera deposits
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/ADC75867.png) center; '></span>
+                                            Andesitic lava flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/8ADF0923.png) center; '></span>
+                                            Yali lower pumice
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(255, 255, 242); '></span>
+                                            Beach deposits
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(204, 255, 255); '></span>
+                                            Nisyros Upper Pumice (35 Ka)
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(0, 153, 230); '></span>
+                                            Yali upper pumice (31 Ka)
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/25B7FC72.png) center; '></span>
+                                            Lower dacitic lava flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(255, 230, 255); '></span>
+                                            Post-caldera domes and lava flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/7B894B2F.png) center;  '></span>
+                                            Epiclastic pumice
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/5BBAE5AB.png) center; '></span>
+                                            Emborio dacitic block and ash flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/2FEE8D45.png) center;'></span>
+                                            Paliokastro conglomerate
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/9BDC2D76.png) center;'></span>
+                                            Erosional caldera feeling deposits
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/72177B74.png) center;'></span>
+                                            Submarine andesitic pillow lavas,hyaloclastites and tuffites
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/897159BB.png) center; '></span>
+                                            Kamara obsidian-perlitic lava domes and flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/893A259E.png) center; '></span>
+                                            Upper andesitic volcaniclastics
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/ADC75867i.png) center; '></span>
+                                            Upper andesitic lava flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(153, 102, 77); '></span>
+                                            Middle andesitic lava flows
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(153, 230, 242); '></span>
+                                            Kos Plateau Tuff (161 Ka)
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/4326D2B.png) center;  '></span>
+                                            Yali marine terrace
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/226E70AE.png) center;  '></span>
+                                            Argos rhyolitic block and ash flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/AB53349i.png) center; '></span>
+                                            Nisyros Lower Pumice
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(212, 255, 191); '></span>
+                                            Dacitic domes and lava flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/13F609E4.png) center;  '></span>
+                                            Enclave-rich dacitic lava flow
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(255, 204, 204); '></span>
+                                            Kyra volcaniclastics
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/CA2C513D.png) center;  '></span>
+                                            Pahia Ammos dacitic lava flows
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/C75D61D8.png) center;  '></span>
+                                            Lower volcaniclastics
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/41D38DA5.png) center;  '></span>
+                                            Kamara tuff ring
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:url(images/fill_polygons/2E40A8A7.png) center;  '></span>
+                                            Lower andesitic lava flows (160 Ka)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="legend" style='background:rgb(128, 179, 0); '></span>
+                                            Ag. Antonios dacitic lavas
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Akto">
+                                    <span class="glyphicon glyphicon-tasks">
+                                    </span>Coastline
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="Akto" class="panel-collapse collapse">
+                            <div >
+                                <table class="table">
+
+                                    <tr>
+                                        <td>
+                                            <div class="legend">
+                                                <svg style='width: 100%; height: 100%;'>
+                                                    <line x1="0" y1="0" x2="100%" y2="100%"
+                                                          style="stroke:#118ee9;stroke-width:5; " />
+                                                </svg>
+                                            </div>
+                                            Coastline
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contact">Developed by <a href='https://gr.linkedin.com/in/christoscharmatzis' target='_blank'>Christos Charmatzis. </a> <a href="mailto:xr_xarmatzis@outlook.com?Subject=Mapbox%203D%20Geologistcal%20Map" target="_top">Send Mail</a></div>
+
+    <script>
+
+        L.mapbox.accessToken = 'pk.eyJ1IjoiYXpvdXJpdGlzIiwiYSI6ImNpZ3hpZG1kZzAwYzBuZG03YXN1a24xbWwifQ.mEN5Faayfs9d13XSieqYDQ';
+        var map = L.mapbox.map('map').setView([36.6115, 27.1252], 12);
+        map.attributionControl = false;
+
+        
+        var layers = document.getElementById('menu-ui');
+
+        addLayer(L.mapbox.tileLayer('mapbox.streets'), 'Base Map', 1);
+        addLayer(L.mapbox.tileLayer('azouritis.o5j28m3i'), 'Nisiros geology', 2);
+
+        function addLayer(layer, name, zIndex) {
+            layer
+                .setZIndex(zIndex)
+                .addTo(map);
+            
+
+            // Create a simple layer switcher that
+            // toggles layers on and off.
+            var link = document.createElement('a');
+            link.href = '#';
+            link.className = 'active';
+            link.innerHTML = name;
+
+            link.onclick = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (map.hasLayer(layer)) {
+                    map.removeLayer(layer);
+                    this.className = '';
+                } else {
+                    map.addLayer(layer);
+                    this.className = 'active';
+                }
+            };
+
+            layers.appendChild(link);
+
+            
+        }
+        L.control.scale().addTo(map);
+        //L.mapbox.map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+    </script>
+</body>
+</html>
